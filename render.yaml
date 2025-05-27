@@ -1,0 +1,13 @@
+services:
+    - type: web
+      name: go-backend
+      env: go
+      plan: free
+      buildCommand: go build -o main .
+      branch: main
+      startCommand: ./main
+      buildFilter:
+          paths:
+              - backend/**
+      rootDir: backend
+      autoDeploy: true
