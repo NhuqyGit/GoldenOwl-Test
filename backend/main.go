@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"goldenowl-test/internal/database"
@@ -48,5 +49,5 @@ func main() {
 	r := gin.Default()
 	routers.RegisterSubjectRoutes(r, scoreHandler)
 
-	r.Run(":8080")
+	r.Run(":" + os.Getenv("PORT"))
 }
