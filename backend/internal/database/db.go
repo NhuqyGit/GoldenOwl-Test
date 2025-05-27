@@ -25,7 +25,7 @@ func ConnPostGresDB() *gorm.DB {
 		dbName := os.Getenv("DB_NAME")
 		dbPort := os.Getenv("DB_PORT")
 
-		connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
 			dbHost, dbUser, dbPass, dbName, dbPort)
 		db, err = gorm.Open(postgres.Open(connStr), &gorm.Config{})
 		if err != nil {
