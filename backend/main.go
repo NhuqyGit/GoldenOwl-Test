@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"goldenowl-test/internal/database"
@@ -13,9 +14,11 @@ import (
 
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("RENDER") == "" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Println("Error loading .env file")
+		}
 	}
 
 	// 1. Kết nối DB
