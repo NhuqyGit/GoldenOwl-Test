@@ -33,6 +33,8 @@ func ConnPostGresDB() *gorm.DB {
 		}
 
 		log.Println("Connected to Database!")
+
+		Migrate(db)
 	})
 
 	return db
