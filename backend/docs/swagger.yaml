@@ -27,7 +27,7 @@ definitions:
       vatLi:
         type: number
     type: object
-host: localhost:8080
+host: go-backend-rc59.onrender.com
 info:
   contact: {}
   description: This is an API for student score management.
