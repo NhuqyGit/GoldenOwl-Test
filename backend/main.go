@@ -26,27 +26,27 @@ func main() {
 		}
 	}
 
-	// 1. Kết nối DB
-	db := database.ConnPostGresDB()
+	// 1. Init & Conn DB
+	dbProvider := database.NewDatabase()
+	db := dbProvider.GetDB()
+	pgxPool := dbProvider.GetPgxPool()
 
-	// // 2. Migration
-	// database.Migrate(db)
+	// 2. New 3 layer
+	scoreRepo := repositories.NewStudentScoreRepo(db, pgxPool)
+	scoreService := services.NewStudentScoreService(scoreRepo)
+	scoreHandler := handlers.NewStudentScoreHandler(scoreService)
 
 	// 3. Seeder
 	start := time.Now() // bắt đầu đếm thời gian
 
-	if err := database.SeedStudentScores(db); err != nil {
+	if err := scoreService.SeedStudentScores(); err != nil {
 		log.Fatalf("Seeding failed: %v", err)
 	}else{
 		log.Println("Seeding succeed")
 	}
 
 	duration := time.Since(start) // tính thời gian đã trôi qua
-	fmt.Println("Thời gian chạy:", duration)
-
-	scoreRepo := repositories.NewStudentScoreRepo()
-	scoreService := services.NewStudentScoreService(scoreRepo)
-	scoreHandler := handlers.NewStudentScoreHandler(scoreService)
+	fmt.Println("Time:", duration)
 
 	r := gin.Default()
 	routers.RegisterSubjectRoutes(r, scoreHandler)
