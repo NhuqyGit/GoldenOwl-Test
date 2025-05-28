@@ -14,10 +14,19 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	// Swagger docs import
+	_ "goldenowl-test/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-
-
+// @title           GoldenOwl Student Score API
+// @version         1.0
+// @description     This is an API for student score management.
+// @host            go-backend-rc59.onrender.com
+// @BasePath        /
 func main() {
 	if os.Getenv("RENDER") == "" {
 		err := godotenv.Load()
@@ -37,19 +46,24 @@ func main() {
 	scoreHandler := handlers.NewStudentScoreHandler(scoreService)
 
 	// 3. Seeder
-	start := time.Now() // bắt đầu đếm thời gian
-
+	start := time.Now()
 	if err := scoreService.SeedStudentScores(); err != nil {
 		log.Fatalf("Seeding failed: %v", err)
 	}else{
-		log.Println("Seeding succeed")
+		log.Println("Seeding succeeded")
 	}
+	fmt.Println("Time:", time.Since(start))
 
-	duration := time.Since(start) // tính thời gian đã trôi qua
-	fmt.Println("Time:", duration)
-
+	// 4: Set up Gin server
 	r := gin.Default()
+
+	// 5: Register API routes
 	routers.RegisterSubjectRoutes(r, scoreHandler)
+
+	// 6: Swagger docs endpoint
+	if os.Getenv("ENABLE_SWAGGER") == "true" {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 
 	r.Run(":" + os.Getenv("PORT"))
 }

@@ -1,0 +1,194 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is an API for student score management.",
+        "title": "GoldenOwl Student Score API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/student-scores": {
+            "get": {
+                "description": "Returns student score based on registration number (SBD)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "student-scores"
+                ],
+                "summary": "Get student score by SBD",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Student Registration Number",
+                        "name": "sbd",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.StudentScore"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student-scores/report": {
+            "get": {
+                "description": "Returns an aggregated report of scores by subject",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "student-scores"
+                ],
+                "summary": "Get score report by subject",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.StudentScore"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student-scores/top-10-groupA": {
+            "get": {
+                "description": "Returns the top 10 students in Group A based on their scores",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "student-scores"
+                ],
+                "summary": "Get top 10 scores for Group A",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.StudentScore"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.StudentScore": {
+            "type": "object",
+            "properties": {
+                "diaLi": {
+                    "type": "number"
+                },
+                "gdcd": {
+                    "type": "number"
+                },
+                "hoaHoc": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lichSu": {
+                    "type": "number"
+                },
+                "maNgoaiNgu": {
+                    "type": "string"
+                },
+                "ngoaiNgu": {
+                    "type": "number"
+                },
+                "nguVan": {
+                    "type": "number"
+                },
+                "sbd": {
+                    "type": "string"
+                },
+                "sinhHoc": {
+                    "type": "number"
+                },
+                "toan": {
+                    "type": "number"
+                },
+                "vatLi": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}

@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"goldenowl-test/internal/services"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,15 +14,17 @@ func NewStudentScoreHandler(service *services.StudentScoreService) *StudentScore
 	return &StudentScoreHandler{service: service}
 }
 
-func (h *StudentScoreHandler) GetFirst10Rows(c *gin.Context) {
-	StudentScores, err := h.service.GetFirst10Rows()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch StudentScores"})
-		return
-	}
-	c.JSON(http.StatusOK, StudentScores)
-}
-
+// GetScoreBySBD godoc
+// @Summary      Get student score by SBD
+// @Description  Returns student score based on registration number (SBD)
+// @Tags         student-scores
+// @Produce      json
+// @Param        sbd  query     string  true  "Student Registration Number"
+// @Success      200  {object}  models.StudentScore
+// @Failure      400  {object}  map[string]string
+// @Failure      404  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /student-scores [get]
 func (h *StudentScoreHandler) GetScoreBySBD(c *gin.Context) {
 	sbd := c.Query("sbd")
 	if sbd == "" {
@@ -43,7 +44,16 @@ func (h *StudentScoreHandler) GetScoreBySBD(c *gin.Context) {
 	c.JSON(200, score)
 }
 
-func (h *StudentScoreHandler) GetScoreReportBySubject(c *gin.Context){
+// GetScoreReportBySubject godoc
+// @Summary      Get score report by subject
+// @Description  Returns an aggregated report of scores by subject
+// @Tags         student-scores
+// @Produce      json
+// @Success      200  {array}  models.StudentScore
+// @Failure      404  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /student-scores/report [get]
+func (h *StudentScoreHandler) GetScoreReportBySubject(c *gin.Context) {
 	data, err := h.service.GetScoreReportBySubject()
 	if err != nil{
 		c.JSON(500, gin.H{"error": err.Error()})
@@ -57,7 +67,16 @@ func (h *StudentScoreHandler) GetScoreReportBySubject(c *gin.Context){
 	c.JSON(200, data)
 }
 
-func (h *StudentScoreHandler) GetTop10GroupA(c *gin.Context){
+// GetTop10GroupA godoc
+// @Summary      Get top 10 scores for Group A
+// @Description  Returns the top 10 students in Group A based on their scores
+// @Tags         student-scores
+// @Produce      json
+// @Success      200  {array}  models.StudentScore
+// @Failure      404  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /student-scores/top-10-groupA [get]
+func (h *StudentScoreHandler) GetTop10GroupA(c *gin.Context) {
 	scores, err := h.service.GetTop10GroupA()
 	if err != nil{
 		c.JSON(500, gin.H{"error": err.Error()})
