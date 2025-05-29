@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { API_HOST } from "../common/config";
 
 const StudentScoreContext = createContext();
 
@@ -14,7 +15,9 @@ export const StudentScoreProvider = ({ children }) => {
             setLoading(true);
             try {
                 // Fetch api report
-                const reportResponse = await fetch("/student-scores/report");
+                const reportResponse = await fetch(
+                    `${API_HOST}/student-scores/report`
+                );
                 const reportJson = await reportResponse.json();
 
                 const subjectMap = {
@@ -39,7 +42,7 @@ export const StudentScoreProvider = ({ children }) => {
 
                 // Fetch top 10 group A
                 const top10Response = await fetch(
-                    "/student-scores/top-10-groupA"
+                    `${API_HOST}/student-scores/top-10-groupA`
                 );
                 const top10Json = await top10Response.json();
                 setTop10GroupA(top10Json);
