@@ -1,0 +1,18 @@
+.header-container {
+    max-height: 60px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    background: var(--yellow);
+    padding: 1rem 2rem;
+
+    h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        font-family: "Roboto", sans-serif;
+        color: var(--black);
+    }
+}

@@ -73,7 +73,7 @@ func (r *StudentScoreRepo) GetTop10GroupA() (*[]models.StudentScore, error) {
 	err := r.db.
 		Model(&models.StudentScore{}).
 		Select("*").
-		Order("toan + vat_li + hoa_hoc DESC").
+		Order("COALESCE(toan, 0) + COALESCE(vat_li, 0) + COALESCE(hoa_hoc, 0) DESC, id ASC").
 		Limit(10).
 		Find(&scores).Error
 
