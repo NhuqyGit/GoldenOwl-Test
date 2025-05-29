@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_HOST } from "../../common/config";
 import { ClipLoader } from "react-spinners";
-import "./search.scss";
+import "./Search.scss";
 
 const Search = () => {
     const [sbd, setSbd] = useState("");
