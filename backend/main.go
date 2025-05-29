@@ -8,6 +8,7 @@ import (
 
 	"goldenowl-test/internal/database"
 	"goldenowl-test/internal/handlers"
+	"goldenowl-test/internal/middlewares"
 	"goldenowl-test/internal/repositories"
 	"goldenowl-test/internal/routers"
 	"goldenowl-test/internal/services"
@@ -57,10 +58,14 @@ func main() {
 	// 4: Set up Gin server
 	r := gin.Default()
 
-	// 5: Register API routes
+	// 5: Use middleware CORS
+	r.Use(middlewares.CORSMiddleware())
+
+
+	// 6: Register API routes
 	routers.RegisterSubjectRoutes(r, scoreHandler)
 
-	// 6: Swagger docs endpoint
+	// 7: Swagger docs endpoint
 	if os.Getenv("ENABLE_SWAGGER") == "true" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}

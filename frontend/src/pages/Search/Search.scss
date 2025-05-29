@@ -27,13 +27,59 @@
                 height: 100%;
                 border-radius: 3px;
                 background: white;
-                color: #464644;
+                color: var(--dark-gray);
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0 0 1px 2px rgba(254, 216, 0, 0.3);
+                }
             }
             button {
+                position: relative;
                 padding: 0.7em 1.5em;
                 background: #181817;
                 border-radius: 3px;
                 border: none;
+                z-index: 0;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 0%;
+                    height: 100%;
+                    border-radius: 3px 0 0 3px;
+                    background: #132db6;
+                    transition: 0.3s;
+                    opacity: 0;
+                    z-index: -1;
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0%;
+                    height: 100%;
+                    border-radius: 0 3px 3px 0px;
+                    background: #132db6;
+                    transition: 0.3s;
+                    opacity: 0;
+                    z-index: -1;
+                }
+
+                &:hover {
+                    &::after {
+                        width: 50%;
+                        opacity: 1;
+                    }
+                    &::before {
+                        width: 50%;
+                        opacity: 1;
+                    }
+                }
             }
         }
     }

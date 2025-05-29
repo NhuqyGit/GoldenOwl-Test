@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API_HOST } from "../../common/config";
+import { ClipLoader } from "react-spinners";
 import "./search.scss";
 
 const Search = () => {
@@ -14,13 +15,8 @@ const Search = () => {
         setResult(null);
 
         try {
-            console.log(API_HOST);
-            const response = await fetch(`/student-scores?sbd=${sbd}`, {
-                method: "GET",
-            });
-
+            const response = await fetch(`/student-scores?sbd=${sbd}`);
             const data = await response.json();
-            console.log(data);
             setResult(data);
         } catch (error) {
             console.error("Fetch error:", error);
@@ -48,7 +44,18 @@ const Search = () => {
 
             <div className="search-result">
                 <h2>Search Result</h2>
-                {loading && <p>Loading...</p>}
+
+                {loading && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "20px",
+                        }}
+                    >
+                        <ClipLoader color="#36d7b7" size={40} />
+                    </div>
+                )}
 
                 {result && !result.error && (
                     <div className="result-table">
@@ -56,32 +63,34 @@ const Search = () => {
                             <strong>SBD:</strong> {result.SBD}
                         </p>
                         <p>
-                            <strong>Toán:</strong> {result.Toan ?? "N/A"}
+                            <strong>Math:</strong> {result.Toan ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Ngữ Văn:</strong> {result.NguVan ?? "N/A"}
+                            <strong>Literature:</strong>{" "}
+                            {result.NguVan ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Ngoại Ngữ:</strong>{" "}
-                            {result.NgoaiNgu ?? "N/A"} ({result.MaNgoaiNgu})
+                            <strong>English:</strong> {result.NgoaiNgu ?? "N/A"}{" "}
+                            ({result.MaNgoaiNgu})
                         </p>
                         <p>
-                            <strong>Lịch Sử:</strong> {result.LichSu ?? "N/A"}
+                            <strong>Physics:</strong> {result.VatLi ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Địa Lí:</strong> {result.DiaLi ?? "N/A"}
+                            <strong>Chemistry:</strong> {result.HoaHoc ?? "N/A"}
                         </p>
                         <p>
-                            <strong>GDCD:</strong> {result.GDCD ?? "N/A"}
+                            <strong>Biology:</strong> {result.SinhHoc ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Vật Lí:</strong> {result.VatLi ?? "N/A"}
+                            <strong>History:</strong> {result.LichSu ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Hóa Học:</strong> {result.HoaHoc ?? "N/A"}
+                            <strong>Geography:</strong> {result.DiaLi ?? "N/A"}
                         </p>
                         <p>
-                            <strong>Sinh Học:</strong> {result.SinhHoc ?? "N/A"}
+                            <strong>Civic Education:</strong>{" "}
+                            {result.GDCD ?? "N/A"}
                         </p>
                     </div>
                 )}

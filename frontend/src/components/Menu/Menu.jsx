@@ -24,12 +24,12 @@ const Menu = () => {
         <div className={`menu-container ${isOpen ? "open" : "closed"}`}>
             <div className="menu-header">
                 <a href="/" className="logo">
-                    <CgDigitalocean color="#292820" size={30} />
+                    <CgDigitalocean color="var(--yellow)" size={30} />
                     {isOpen && <h1>G-Scores</h1>}
                 </a>
                 {isOpen && (
                     <div className="sidebar-icon" onClick={handleOpenMenu}>
-                        <BsLayoutSidebarInset color="#292820" size={18} />
+                        <BsLayoutSidebarInset color="white" size={18} />
                     </div>
                 )}
             </div>
@@ -39,7 +39,7 @@ const Menu = () => {
                     onDoubleClick={handleNavClick}
                     className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                    <RxDashboard color="#292820" size={18} />
+                    <RxDashboard color="white" size={18} />
                     {isOpen && <span>Dashboard</span>}
                 </NavLink>
 
@@ -48,7 +48,7 @@ const Menu = () => {
                     onDoubleClick={handleNavClick}
                     className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                    <IoSearchOutline color="#292820" size={18} />
+                    <IoSearchOutline color="white" size={18} />
                     {isOpen && <span>Search Scores</span>}
                 </NavLink>
 
@@ -57,7 +57,7 @@ const Menu = () => {
                     onDoubleClick={handleNavClick}
                     className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                    <FaRegChartBar color="#292820" size={18} />
+                    <FaRegChartBar color="white" size={18} />
                     {isOpen && <span>Reports</span>}
                 </NavLink>
             </nav>
