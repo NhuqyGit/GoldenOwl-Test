@@ -1,4 +1,4 @@
-import "./dashboard.scss";
+import "./Dashboard.scss";
 import { useStudentScores } from "../../contexts/StudentScoresProvider";
 import Top10 from "../../components/Top10/Top10";
 import Loader from "../../components/Loader/Loader";
