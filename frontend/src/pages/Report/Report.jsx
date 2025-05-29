@@ -17,16 +17,16 @@ const ChartSkeleton = () => (
 );
 
 const Report = () => {
-    const { reportData, loading } = useStudentScores();
+    const { reportData, loadingReport } = useStudentScores();
 
     return (
         <div className="report-container">
             {/* {loading && <ChartSkeleton />} */}
-            {loading && <Loader />}
-            {!loading && reportData && (
+            {loadingReport && <Loader />}
+            {!loadingReport && reportData && (
                 <NivoGroupedBarChart reportData={reportData} />
             )}
-            {!loading && !reportData && <div>Failed to load data</div>}
+            {!loadingReport && !reportData && <div>Failed to load data</div>}
         </div>
     );
 };

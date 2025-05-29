@@ -8,18 +8,17 @@ export const useStudentScores = () => useContext(StudentScoreContext);
 export const StudentScoreProvider = ({ children }) => {
     const [reportData, setReportData] = useState(null);
     const [top10GroupA, setTop10GroupA] = useState([]);
-    const [loading, setLoading] = useState(true);
+
+    const [loadingReport, setLoadingReport] = useState(true);
+    const [loadingTop10, setLoadingTop10] = useState(true);
 
     useEffect(() => {
-        const fetchAll = async () => {
-            setLoading(true);
+        // fetch api report
+        const fetchReport = async () => {
+            setLoadingReport(true);
             try {
-                // Fetch api report
-                const reportResponse = await fetch(
-                    `${API_HOST}/student-scores/report`
-                );
-                const reportJson = await reportResponse.json();
-
+                const res = await fetch(`${API_HOST}/student-scores/report`);
+                const json = await res.json();
                 const subjectMap = {
                     toan: "Math",
                     ngu_van: "Literature",
@@ -31,29 +30,36 @@ export const StudentScoreProvider = ({ children }) => {
                     dia_li: "Geography",
                     gdcd: "Civic Education",
                 };
-
-                const transformed = Object.entries(reportJson).map(
-                    ([subjectKey, levels]) => ({
-                        subject: subjectMap[subjectKey] || subjectKey,
-                        ...levels,
-                    })
-                );
+                const transformed = Object.entries(json).map(([key, val]) => ({
+                    subject: subjectMap[key] || key,
+                    ...val,
+                }));
                 setReportData(transformed);
-
-                // Fetch top 10 group A
-                const top10Response = await fetch(
-                    `${API_HOST}/student-scores/top-10-groupA`
-                );
-                const top10Json = await top10Response.json();
-                setTop10GroupA(top10Json);
             } catch (err) {
-                console.error("Fetch error:", err);
+                console.error("Fetch report error:", err);
             } finally {
-                setLoading(false);
+                setLoadingReport(false);
             }
         };
 
-        fetchAll();
+        //fetch top10
+        const fetchTop10 = async () => {
+            setLoadingTop10(true);
+            try {
+                const res = await fetch(
+                    `${API_HOST}/student-scores/top-10-groupA`
+                );
+                const json = await res.json();
+                setTop10GroupA(json);
+            } catch (err) {
+                console.error("Fetch top10 error:", err);
+            } finally {
+                setLoadingTop10(false);
+            }
+        };
+
+        fetchReport();
+        fetchTop10();
     }, []);
 
     return (
@@ -61,7 +67,8 @@ export const StudentScoreProvider = ({ children }) => {
             value={{
                 reportData,
                 top10GroupA,
-                loading,
+                loadingReport,
+                loadingTop10,
             }}
         >
             {children}
