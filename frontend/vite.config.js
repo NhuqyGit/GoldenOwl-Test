@@ -6,7 +6,7 @@ export default defineConfig({
     server: {
         proxy: {
             "/student-scores": {
-                target: import.meta.env.VITE_API_HOST,
+                target: "http://localhost:8080",
                 changeOrigin: true,
                 secure: false,
             },
