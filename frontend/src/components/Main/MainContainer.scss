@@ -10,3 +10,9 @@
         overflow-y: auto;
     }
 }
+
+@media (max-width: 480px) {
+    .content {
+        padding: 1rem !important;
+    }
+}

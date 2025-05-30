@@ -84,3 +84,39 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .input {
+        flex-direction: column;
+        align-items: flex-start !important;
+        input {
+            width: 70% !important;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        color: black;
+
+        [class^="search-"] {
+            padding: 1rem !important;
+        }
+        .input {
+            input {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .input {
+        input {
+            width: 100% !important;
+        }
+    }
+}
