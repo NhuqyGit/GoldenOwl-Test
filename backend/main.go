@@ -63,6 +63,9 @@ func main() {
 
 
 	// 6: Register API routes
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "G-Scores API. Use /student-scores endpoint.")
+	})
 	routers.RegisterSubjectRoutes(r, scoreHandler)
 
 	// 7: Swagger docs endpoint
